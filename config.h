@@ -17,17 +17,20 @@ static const char col_gray4[]       = "#f8f8f2";
 static const char col_cyan[]        = "#8be9fd";
 static const char col_pink[]        = "#ff79c6";
 static const char col_purple[]      = "#bd93f9";
+static const char col_urgborder[]   = "#f1fa8c";
 static const unsigned int baralpha = 0xd0;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_gray1,  col_pink  },
+	[SchemeNorm] = { col_gray3, col_gray1, col_gray1 },
+	[SchemeSel]  = { col_gray4, col_purple,  col_pink  },
+	[SchemeUrg]  = { col_gray1, col_urgborder,  col_urgborder  },
 };
 static const unsigned int alphas[][3]      = {
 	/*               fg      bg        border     */
 	[SchemeNorm] = { OPAQUE, baralpha, borderalpha },
 	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeUrg]  = { OPAQUE, baralpha, borderalpha },
 };
 
 /* tagging */
@@ -46,7 +49,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.52; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
@@ -68,11 +71,11 @@ static const Layout layouts[] = {
 #define STACKKEYS(MOD,ACTION) \
 	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
 	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
-	{ MOD, XK_grave, ACTION##stack, {.i = PREVSEL } }, \
-	{ MOD, XK_q,     ACTION##stack, {.i = 0 } }, \
-	{ MOD, XK_a,     ACTION##stack, {.i = 1 } }, \
-	{ MOD, XK_z,     ACTION##stack, {.i = 2 } }, \
-	{ MOD, XK_x,     ACTION##stack, {.i = -1 } },
+	{ MOD, XK_grave, ACTION##stack, {.i = PREVSEL } },
+	/* { MOD, XK_q,     ACTION##stack, {.i = 0 } }, \ */
+	/* { MOD, XK_a,     ACTION##stack, {.i = 1 } }, \ */
+	/* { MOD, XK_z,     ACTION##stack, {.i = 2 } }, \ */
+	/* { MOD, XK_x,     ACTION##stack, {.i = -1 } }, */
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -84,6 +87,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "rofi", "-show", "drun" };
 static const char *termcmd[]  = { "alacritty", NULL };
 
+#include "focusurgent.c"
 static Key keys[] = {
 	/* modifier                     key                function        argument */
 	{ MODKEY,                       XK_p,              spawn,          {.v = dmenucmd } },
@@ -123,6 +127,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                              7)
 	TAGKEYS(                        XK_9,                              8)
 	{ MODKEY|ShiftMask,             XK_q,              quit,           {0} },
+	{ MODKEY,                       XK_u,      focusurgent,    {0} },
 /* +	{ MODKEY|ShiftMask,             XK_BackSpace, quit,        {0} }, */
 };
 
