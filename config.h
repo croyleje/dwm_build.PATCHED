@@ -101,6 +101,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,              incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,              setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,              setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_h,      setcfact,       {.f = +0.25} },
+	{ MODKEY|ShiftMask,             XK_l,      setcfact,       {.f = -0.25} },
+	{ MODKEY|ShiftMask,             XK_o,      setcfact,       {.f =  0.00} },
 	{ MODKEY|ShiftMask,             XK_Return,         zoom,           {0} },
 	{ MODKEY,                       XK_Tab,            view,           {0} },
 	{ MODKEY,                       XK_BackSpace,      killclient,     {0} },
@@ -112,6 +115,14 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_f,              togglefullscr,  {0} },
 	{ MODKEY,                       XK_0,              view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,              tag,            {.ui = ~0 } },
+	{ MODKEY,                       XK_Down,   moveresize,     {.v = "0x 25y 0w 0h" } },
+	{ MODKEY,                       XK_Up,     moveresize,     {.v = "0x -25y 0w 0h" } },
+	{ MODKEY,                       XK_Right,  moveresize,     {.v = "25x 0y 0w 0h" } },
+	{ MODKEY,                       XK_Left,   moveresize,     {.v = "-25x 0y 0w 0h" } },
+    { MODKEY|ShiftMask,             XK_Down,   moveresize,     {.v = "0x 0y 0w 25h" } },
+	{ MODKEY|ShiftMask,             XK_Up,     moveresize,     {.v = "0x 0y 0w -25h" } },
+	{ MODKEY|ShiftMask,             XK_Right,  moveresize,     {.v = "0x 0y 25w 0h" } },
+	{ MODKEY|ShiftMask,             XK_Left,   moveresize,     {.v = "0x 0y -25w 0h" } },
     /* -Wunused-function warning focusmon & tagmon  */
 	/* { MODKEY,                       XK_comma,          focusmon,       {.i = -1 } }, */
 	/* { MODKEY,                       XK_period,         focusmon,       {.i = +1 } }, */
